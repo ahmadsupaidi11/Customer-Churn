@@ -45,3 +45,33 @@ plt.tight_layout()
 plt.show()
 
 #preprosessing
+cleaned_df=df_load.drop(['customerID','UpdatedAt'], axis=1)
+print(cleaned_df.head())
+
+#convert data non numeric ke numeric
+for column in cleaned_df.columns :
+    if cleaned_df[column].dtype == np.number: continue
+    cleaned_df[column]= LabelEncoder().fit_transform(cleaned_df[column])
+    print(cleaned_df.describe())
+
+#memecah data
+x = cleaned_df.drop('Churn', axis=1)
+y = cleaned_df['Churn']
+
+x_train, x_test, y_train,y_test = train_test_split(x,y, test_size=0.3, random_state=42)
+print('Jumlah baris dan kolom dari x_train adalah:', x_train.shape,', sedangkan Jumlah baris dan kolom dari y_train adalah:', y_train.shape)
+print('Prosentase Churn di data Training adalah:')
+print(y_train.value_counts(normalize=True))
+print('Jumlah baris dan kolom dari x_test adalah:', x_test.shape,', sedangkan Jumlah baris dan kolom dari y_test adalah:', y_test.shape)
+print('Prosentase Churn di data Testing adalah:')
+print(y_test.value_counts(normalize=True))
+
+#membuat modelling
+log_model = LogisticRegression().fit(x_train, y_train)
+print('Model Logistic Regression yang terbentuk adalah: \n', log_model)
+
+# Predict
+y_train_pred = log_model.predict(x_train)
+# Print classification report
+print('Classification Report Training Model (Logistic Regression) :')
+print(classification_report(y_train, y_train_pred))
