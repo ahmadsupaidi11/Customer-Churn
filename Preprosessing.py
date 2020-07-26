@@ -5,6 +5,7 @@ import seaborn as sns
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from  sklearn.linear_model import LogisticRegression
+from  sklearn.metrics import  classification_report, confusion_matrix
 from  sklearn.ensemble import RandomForestClassifier
 from  sklearn.ensemble import  GradientBoostingClassifier
 import pickle
@@ -75,3 +76,36 @@ y_train_pred = log_model.predict(x_train)
 # Print classification report
 print('Classification Report Training Model (Logistic Regression) :')
 print(classification_report(y_train, y_train_pred))
+
+# Form confusion matrix as a DataFrame
+confusion_matrix_df = pd.DataFrame((confusion_matrix(y_train, y_train_pred)), ('No churn', 'Churn'), ('No churn', 'Churn'))
+
+# Plot confusion matrix
+plt.figure()
+heatmap = sns.heatmap(confusion_matrix_df, annot=True, annot_kws={'size': 14}, fmt='d', cmap='YlGnBu')
+heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=14)
+heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=0, ha='right', fontsize=14)
+
+plt.title('Confusion Matrix for Training Model\n(Logistic Regression)', fontsize=18, color='darkblue')
+plt.ylabel('True label', fontsize=14)
+plt.xlabel('Predicted label', fontsize=14)
+plt.show()
+
+#randem forest
+rdf_model = RandomForestClassifier().fit(x_train,y_train)
+print(rdf_model)
+
+y_train_pred = rdf_model.predict(x_train)
+print('Classification Report Training Model (Random Forest) :')
+print(classification_report(y_train, y_train_pred))
+
+confusion_matrix_df = pd.DataFrame((confusion_matrix(y_train, y_train_pred)), ('No churn', 'Churn'), ('No churn', 'Churn'))
+plt.figure()
+heatmap = sns.heatmap(confusion_matrix_df, annot=True, annot_kws={'size':14}, fmt='d', cmap='YlGnBu')
+heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation= 0, ha='right', fontsize=14)
+heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation= 0, ha='right', fontsize=14)
+plt.title('Confusion Matrix for Training Model\n(Random Forest)\n',
+          fontsize=18, color='darkblue')
+plt.ylabel('True label', fontsize=14)
+plt.xlabel('Predicted label', fontsize=14)
+plt.show()
