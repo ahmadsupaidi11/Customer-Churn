@@ -7,7 +7,8 @@ Walaupun baru berumur 1 tahun lebih sedikit, DQLab Telco sudah mempunyai banyak 
 # challenge 
 - exploration data analysis
 - pre-processing data
--manchine learning modelling use
+- manchine learning modelling use:
+
 *Logistic Regression
 *Random forest
 *Gradient Boosting
