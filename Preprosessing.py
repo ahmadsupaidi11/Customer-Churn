@@ -98,7 +98,7 @@ print(rdf_model)
 y_train_pred = rdf_model.predict(x_train)
 print('Classification Report Training Model (Random Forest) :')
 print(classification_report(y_train, y_train_pred))
-
+#grafik
 confusion_matrix_df = pd.DataFrame((confusion_matrix(y_train, y_train_pred)), ('No churn', 'Churn'), ('No churn', 'Churn'))
 plt.figure()
 heatmap = sns.heatmap(confusion_matrix_df, annot=True, annot_kws={'size':14}, fmt='d', cmap='YlGnBu')
@@ -109,3 +109,26 @@ plt.title('Confusion Matrix for Training Model\n(Random Forest)\n',
 plt.ylabel('True label', fontsize=14)
 plt.xlabel('Predicted label', fontsize=14)
 plt.show()
+
+# gradient boosting
+gbt_model = GradientBoostingClassifier().fit(x_train,y_train)
+print(gbt_model)
+y_train_pred = gbt_model.predict(x_train)
+print('Classification Report Training Model (Gradient Boosting):')
+print(classification_report(y_train, y_train_pred))
+#grafik
+confusion_matrix_df = pd.DataFrame((confusion_matrix(y_train, y_train_pred)), ('No churn', 'Churn'), ('No churn', 'Churn'))
+plt.figure()
+heatmap = sns.heatmap(confusion_matrix_df, annot=True, annot_kws={'size':14}, fmt='d', cmap='YlGnBu')
+heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation= 0, ha='right', fontsize=14)
+heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation= 0, ha='right', fontsize=14)
+plt.title('Confusion Matrix for Training Model\n(Gradient Boosting)\n',
+          fontsize=18, color='darkblue')
+plt.ylabel('True label', fontsize=14)
+plt.xlabel('Predicted label', fontsize=14)
+plt.show()
+
+y_test_predict = log_model.predict(x_test)
+print('Classification Report Testing Model (Gradient Boosting):')
+print(classification_report(y_test,y_test_predict))
+
